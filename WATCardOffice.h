@@ -13,7 +13,7 @@ _Task WATCardOffice {
         unsigned int sid;                     // marshalled arguments and return future
         WATCard::FWATCard result;          // return future
         Job( unsigned int amount, unsigned int sid, WATCard *card ) 
-            : amount(amount), sid(sid), amount(amount) {}
+            : amount(amount), sid(sid), card(card) {}
     };
     _Task Courier {
     private:
@@ -21,7 +21,7 @@ _Task WATCardOffice {
         Printer &printer;
         WATCardOffice &office;
         Bank &bank;
-        unsigned int id;
+        unsigned int id; //not sure if needed
 
         enum States {
             Start = 'S', StartFundsTransfer = 't', CompleteFundsTransfer = 'T', Finish = 'F'
@@ -32,10 +32,10 @@ _Task WATCardOffice {
     };   
 
     enum States { 
-        Start = 'S', RequestWork = 'W', Create   = 'C', Transfer = 'T', Finish   = 'F'
+        Start = 'S', Work = 'W', Create   = 'C', Transfer = 'T', Finish   = 'F'
     };              
 
-    std::vector<Courier*> couriers;
+    Courier **couriers; 
     std::queue<Job*> jobs;
     Printer &printer;
     Bank &bank;
@@ -43,7 +43,7 @@ _Task WATCardOffice {
     uCondition courierWork;
 
     void main();
-    
+
   public:
     _Event Lost {};                        // lost WATCard
     WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers );
