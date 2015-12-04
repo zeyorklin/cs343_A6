@@ -12,8 +12,6 @@ _Task Truck {
 	unsigned int numVendingMachines;
 	unsigned int maxStockPerFlavour;
 
-	unsigned int *inventory;
-
     void main();
   public:
     Truck( Printer &prt, NameServer &nameServer, BottlingPlant &plant,
