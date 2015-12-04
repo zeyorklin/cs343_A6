@@ -1,6 +1,7 @@
 #ifndef GROUPOFF_H
 #define GROUPOFF_H
 
+#include "Printer.h"
 
 _Task Groupoff {
 	Printer &prt;
