@@ -8,6 +8,10 @@ _Task Groupoff {
 	unsigned int numStudents;
 	unsigned int sodaCost;
 	unsigned int groupoffDelay;
+
+	unsigned int cardsAssigned;
+	uCondition lock;
+	WATCard::FWTCard *card;
     void main();
   public:
     Groupoff( Printer &prt, unsigned int numStudents, unsigned int sodaCost, unsigned int groupoffDelay );
