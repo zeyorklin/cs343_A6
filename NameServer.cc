@@ -18,11 +18,6 @@ NameServer::~NameServer()
 void NameServer::main()
 {
 	prt.print(Printer::NameServer, 'S');
-}
-
-VendingMachine **NameServer::getMachineList()
-{
-	return vendingMachines;
 	while(true)
 	{
 		_Accept(~NameServer) break;
@@ -32,11 +27,18 @@ VendingMachine **NameServer::getMachineList()
 	prt.print(Printer::NameServer, 'F');
 }
 
+VendingMachine **NameServer::getMachineList()
+{
+	return vendingMachines;
+
+}
+
 VendingMachine *NameServer::getMachine( unsigned int id )
 {
 	VendingMachine *machine = vendingMachines[assignedMachines[id]];
 	prt.print(Printer::NameServer, 'N', id, machine->getId());
 	assignedMachines[id] = (assignedMachines[id] + 1) % numVendingMachines;
+	return machine;
 }
 
 void NameServer::VMregister( VendingMachine *vendingmachine )
