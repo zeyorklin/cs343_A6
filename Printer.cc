@@ -31,19 +31,19 @@ void Printer::finished() {
 		}
 		cout << "\t";
 	}
+	cout << endl;
 }
 
 void Printer::_print(unsigned int id, char state, int numVal, int value1, int value2) {
 	if (buffer[id] != NULL) flush();
 	Data *data = new Data();
-	data->id = id;
 	data->state = state;
-	data->numValue = numValue;
+	data->numValue = numVal;
 
-	if (numValue == 2) {
+	if (numVal == 2) {
 		data->value1 = value1;
 		data->value2 = value2;
-	} else if (numValue == 1) {
+	} else if (numVal == 1) {
 		data->value1 = value1;
 	}
 
@@ -96,11 +96,11 @@ void Printer::flush() {
 			cout << "\t";
 			continue;
 		}
-		cout << buffer[i].state;
+		cout << buffer[i]->state;
 		if (buffer[i]->numValue == 2) {
-			cout << " " << buffer[i]->value1 << "," << buffer[i]->value2;
+			cout << buffer[i]->value1 << "," << buffer[i]->value2;
 		} else if (buffer[i]->numValue == 1) {
-			cout << " " << buffer[i]->value1;
+			cout << buffer[i]->value1;
 		}
 		delete buffer[i];
 		buffer[i] = NULL;
@@ -110,7 +110,9 @@ void Printer::flush() {
 }
 
 
-void Printer::~Printer() {
+Printer::~Printer() {
 	cout << "***********************" << endl;
+	for (unsigned int i = 0; i < bufferSize; i++)
+		delete buffer[i];
 	delete [] buffer;
 }
