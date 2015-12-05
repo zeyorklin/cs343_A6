@@ -19,14 +19,14 @@ void VendingMachine::buy( Flavours flavour, WATCard &card ) {
 		} else {
 			state = BUY;
 			buyFlavour = flavour;
-			buyCard = card; 
+			buyCard = &card; 
 		}
 		studentTask = &uThisTask();
 		done.wait();
 }
 
 
-unsigned int VendingMachine::*inventory() {
+unsigned int *VendingMachine::inventory() {
 	prt.print(Printer::Vending, 'r');
 	stocking = true;
 	return stock;
@@ -65,7 +65,7 @@ void VendingMachine::main() {
 					_Resume Stock() _At *studentTask;
 					break;
 				case BUY:
-					buyCard.withdraw(sodaCost);
+					buyCard->withdraw(sodaCost);
 					stock[buyFlavour]--;
 					prt.print(Printer::Vending, 'B', buyFlavour, stock[buyFlavour]);
 					break;
@@ -78,6 +78,6 @@ void VendingMachine::main() {
 }
 
 
-void VendingMachine::~VendingMachine() {
+VendingMachine::~VendingMachine() {
 
 }

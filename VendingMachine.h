@@ -1,26 +1,19 @@
-#ifndef GROUPOFF_H
-#define GROUPOFF_H
+#ifndef VENDING_MACHINE_H
+#define VENDING_MACHINE_H
 
 #include "Printer.h"
 #include "NameServer.h"
+#include "WATCard.h"
 
 _Task VendingMachine {
 
-    enum STATE {FUND, STOCK, BUY};
+    enum MACHINE_STATE {FUND, STOCK, BUY};
 
     Printer &prt;
     NameServer &nameServer;
     unsigned int id;
     unsigned int sodaCost;
     unsigned int maxStockPerFlavour;
-
-    unsigned int* stock;
-    State state;
-    Flavours buyFlavour;
-    WATCard &buyCard;
-    uBaseTask *studentTask;
-    bool stocking;
-    uCondition done;
 
     void main();
   public:
@@ -35,6 +28,15 @@ _Task VendingMachine {
     _Nomutex unsigned int cost();
     _Nomutex unsigned int getId();
     ~VendingMachine();
+
+  private:
+    unsigned int* stock;
+    MACHINE_STATE state;
+    Flavours buyFlavour;
+    WATCard *buyCard;
+    uBaseTask *studentTask;
+    bool stocking;
+    uCondition done;
 };
 
 #endif

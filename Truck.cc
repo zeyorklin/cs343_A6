@@ -47,7 +47,7 @@ void Truck::main() {
 
 				inventory[i] += addBottles;
 				cargo[i] -= addBottles;
-				total -= addBottles;
+				totalBottles -= addBottles;
 				if (spaceInMachine > cargo[i]) unfilled += spaceInMachine - cargo[i];
 			}
 
@@ -56,7 +56,7 @@ void Truck::main() {
 			}
 
 
-			prt.print(Printer::Truck, 'D', machine->getId(), total);
+			prt.print(Printer::Truck, 'D', machine->getId(), totalBottles);
 
 			machine->restocked();
 

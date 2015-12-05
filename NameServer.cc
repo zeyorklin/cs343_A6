@@ -5,7 +5,7 @@
 NameServer::NameServer( Printer &prt, unsigned int numVendingMachines, unsigned int numStudents )
 	: prt(prt), numVendingMachines(numVendingMachines), numStudents(numStudents), numRegisteredMachines(0)
 	{
-		assignedMachines = new int [numStudents];
+		assignedMachines = new unsigned int [numStudents];
 		vendingMachines = new VendingMachine*[numStudents];
 	}
 
@@ -17,7 +17,7 @@ NameServer::~NameServer()
 
 void NameServer::main()
 {
-	prt.printer(Printer::NameServer, 'S');
+	prt.print(Printer::NameServer, 'S');
 }
 
 VendingMachine **NameServer::getMachineList()
@@ -29,19 +29,19 @@ VendingMachine **NameServer::getMachineList()
 		or _When(numVendingMachines = numRegisteredMachines) _Accept(getMachine, getMachineList);
 		or _When(numVendingMachines > numRegisteredMachines) _Accept(VMregister);
 	}
-	prt.printer(Printer::NameServer, 'F');
+	prt.print(Printer::NameServer, 'F');
 }
 
 VendingMachine *NameServer::getMachine( unsigned int id )
 {
 	VendingMachine *machine = vendingMachines[assignedMachines[id]];
-	prt.printer(Printer::NameServer, 'N', id, machine->getId());
+	prt.print(Printer::NameServer, 'N', id, machine->getId());
 	assignedMachines[id] = (assignedMachines[id] + 1) % numVendingMachines;
 }
 
 void NameServer::VMregister( VendingMachine *vendingmachine )
 {
-	prt.printer(Printer::NameServer, 'R', vendingmachine->getId());
+	prt.print(Printer::NameServer, 'R', vendingmachine->getId());
 	vendingMachines[numRegisteredMachines] = vendingmachine;
 	numRegisteredMachines += 1;
 }
