@@ -18,7 +18,7 @@ BottlingPlant::BottlingPlant( Printer &prt, NameServer &nameServer, unsigned int
 void BottlingPlant::getShipment( unsigned int cargo[] ) {
 	if (shutdown) {
 		uRendezvousAcceptor();
-		throw Shutdown;
+		_Throw Shutdown();
 	}
 
 	for (unsigned int i = 0; i < VendingMachine::NUM_FLAVOUR; i++) {
@@ -51,7 +51,7 @@ void BottlingPlant::main() {
 
 		} or _Accept(~BottlingPlant) {
 			shutdown = true;
-			_Accept(getShipment);
+			//_Accept(getShipment);
 			break;
 		}
 	}
