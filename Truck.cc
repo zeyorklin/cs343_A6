@@ -6,7 +6,7 @@
 Truck::Truck( Printer &prt, NameServer &nameServer, BottlingPlant &plant,
            unsigned int numVendingMachines, unsigned int maxStockPerFlavour )
            : prt(prt), nameServer(nameServer), plant(plant), 
-           numVendingMachines(numVendingMachines), maxStockPerFlavour(maxStockPerFlavour) {
+           numVendingMachines(numVendingMachines), maxStockPerFlavour(maxStockPerFlavour), nextMachineToStock(0) {
 }
 
 
@@ -35,7 +35,7 @@ void Truck::main() {
 
 			if (totalBottles <= 0) break;
 
-			VendingMachine *machine = machines[i];
+			VendingMachine *machine = machines[nextMachineToStock];
 			prt.print(Printer::Truck, 'd', machine->getId(), totalBottles);
 
 			// fill machine
@@ -59,6 +59,7 @@ void Truck::main() {
 			prt.print(Printer::Truck, 'D', machine->getId(), totalBottles);
 
 			machine->restocked();
+			nextMachineToStock = (nextMachineToStock + 1) % numVendingMachines;
 
 		}
 

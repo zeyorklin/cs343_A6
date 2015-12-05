@@ -27,13 +27,13 @@ void VendingMachine::buy( Flavours flavour, WATCard &card ) {
 
 
 unsigned int *VendingMachine::inventory() {
-	prt.print(Printer::Vending, 'r');
+	prt.print(Printer::Vending, id, 'r');
 	stocking = true;
 	return stock;
 }
 
 void VendingMachine::restocked() {
-	prt.print(Printer::Vending, 'R');
+	prt.print(Printer::Vending, id, 'R');
 	stocking = false;
 }
 
@@ -74,7 +74,7 @@ void VendingMachine::main() {
 		}
 	}
 
-	prt.print(Printer::Vending, 'F');
+	prt.print(Printer::Vending, id, 'F');
 }
 
 
