@@ -21,7 +21,7 @@ void NameServer::main()
 	while(true)
 	{
 		_Accept(~NameServer) break;
-		or _When(numVendingMachines = numRegisteredMachines) _Accept(getMachine, getMachineList);
+		or _When(numVendingMachines == numRegisteredMachines) _Accept(getMachine, getMachineList);
 		or _When(numVendingMachines > numRegisteredMachines) _Accept(VMregister);
 	}
 	prt.print(Printer::NameServer, 'F');
