@@ -49,7 +49,7 @@ _Nomutex unsigned int VendingMachine::getId() {
 
 
 void VendingMachine::main() {
-	prt.print(Printer::Vending, 'S', sodaCost);
+	prt.print(Printer::Vending, id, 'S', sodaCost);
 
 	for ( ;; ) {
 		_Accept(~VendingMachine) {

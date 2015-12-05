@@ -20,7 +20,7 @@ void Student::main() {
 	purchase = rng(1, maxPurchases);
 	flavour = (VendingMachine::Flavours)rng(VendingMachine::Flavours::NUM_FLAVOUR -1);
 
-	prt.print(Printer::Student, 'S', flavour, purchase);
+	prt.print(Printer::Student, id, 'S', flavour, purchase);
 
 	// create card
 	WATCard::FWATCard card = cardOffice.create(id, startBalance);
