@@ -5,9 +5,10 @@ Groupoff::Groupoff( Printer &prt, unsigned int numStudents, unsigned int sodaCos
 
 }
 
-WATCard::FWATCard Groupoff:giftCard() {
-	lock.wait();
-	return card;
+WATCard::FWATCard Groupoff::giftCard() {
+	WATCard::FWATCard fcard;
+	requests.push(fcard);
+	return fcard;
 }
 
 
@@ -19,11 +20,14 @@ void Groupoff::main() {
 			break;
 		} _Accept(giftCard) {
 			if (cardsAssigned > numStudents) break;
+			WATCard *card = new WATCard();
+			card->deposit(sodaCost);
 			yield(groupoffDelay);
-			card = new WATCard::FWTCard();
-			card.deposit(sodaCost);
-			cardsAssigned++;
-			lock.signalBlock();
+			
+			WATCard::FWATCard fcard = requests.front();
+			requests.pop();
+			fcard.delivery(card);
+			
 		}_Else {
 		}
 	}

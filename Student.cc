@@ -14,33 +14,48 @@ Student::Student( Printer &prt, NameServer &nameServer, WATCardOffice &cardOffic
 
 
 void Student::main() {
+
+	int startBalance = 5;
+
 	purchase = rng(1, maxPurchases);
-	flavour = (VendingMachine::Flavours)rng((unsigned int)VendingMachine::Flavours.NUM_FLAVOUR -1);
+	flavour = (VendingMachine::Flavours)rng(VendingMachine::Flavours::NUM_FLAVOUR -1);
 
 	prt.print(Printer::Student, 'S', flavour, purchase);
 
 	// create card
-	WATCard::FWATCard card = cardOffice.create(id, 5);
+	WATCard::FWATCard card = cardOffice.create(id, startBalance);
 	WATCard::FWATCard gift = groupoff.giftCard();
 
-	// get machine location
-	VendingMachine *machine = nameServer.getMachine(id);
-	prt.print(Printer::Student, 'V', machine->getId());
 
+	for (unsigned int purchased = 0; purchased < purchase; ) {
 
+		// get machine location
+		VendingMachine *machine = nameServer.getMachine(id);
+		prt.print(Printer::Student, 'V', machine->getId());
 
-	for (unsigned int purchased = 0; i < purchase; ) {
 		yield(rng(1, 10));
 		try {
-			machine->buy(flavour, gift.balance() > 0 : gift : card);
-			purchased++;
-			prt.print(Printer::Student, );
+
+			_Select(gift || card);
+
+			if (gift.available()) {
+				machine->buy(flavour, *(gift()));
+				prt.print(Printer::Student, id, 'G', gift()->getBalance());
+				gift.reset();
+				purchased++;
+			} else if (card.available()) {
+				machine->buy(flavour, *(card()));
+				prt.print(Printer::Student, id, 'B', card()->getBalance());
+				purchased++;
+			}
+			
 		} catch (WATCardOffice::Lost &e) {
-
+			prt.print(Printer::Student, id, 'L');
+			card = cardOffice.create(id, startBalance);
 		} catch (VendingMachine::Funds &e) {
-
+			card = cardOffice.transfer(id, machine->cost() + startBalance, card());
 		} catch (VendingMachine::Stock &e) {
-
+			// try another machine
 		}
 	}
 
