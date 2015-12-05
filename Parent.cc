@@ -1,6 +1,6 @@
 #include <uC++.h>
 #include "Parent.h"
-#include "mprng.h"
+#include "MPRNG.h"
 
 Parent::Parent( Printer &prt, Bank &bank, unsigned int numStudents, unsigned int parentalDelay ) 
 	: prt(prt), bank(bank), numStudents(numStudents), parentalDelay(parentalDelay)
@@ -13,7 +13,7 @@ void Parent::main() {
     _Accept(~Parent) {
       break;
     } 
-    else 
+    _Else 
     {
       yield(parentalDelay);
       int studentId = rng(numStudents - 1);

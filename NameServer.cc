@@ -3,7 +3,7 @@
 
 
 NameServer::NameServer( Printer &prt, unsigned int numVendingMachines, unsigned int numStudents )
-	: prt(prt), numVendingMachines(numVendingMachines), numStudents(numStudents), numRegisteredMachines(0)
+	: prt(prt), numStudents(numStudents), numVendingMachines(numVendingMachines), numRegisteredMachines(0)
 	{
 		assignedMachines = new unsigned int [numStudents];
 		vendingMachines = new VendingMachine*[numStudents];

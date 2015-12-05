@@ -1,4 +1,12 @@
 
+
+Commands:
+
+make soda
+make clean
+
+- edit soda.config to chnage the configuration
+
 Work division:
 
 Tianhao

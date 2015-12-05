@@ -10,7 +10,7 @@ _Monitor Bank {
 private:
 	unsigned int numStudents;
 	unsigned int *balances;
-	uCondition *banlancesCond;
+	uCondition *balancesCond;
 
 
 };

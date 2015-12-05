@@ -7,7 +7,7 @@
 
 _Task Parent {
 private:
-    void main
+    void main();
     Printer &prt;
     Bank &bank;
     unsigned int numStudents, parentalDelay;

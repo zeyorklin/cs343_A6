@@ -2,9 +2,8 @@
 #define WATCARDOFFICE_H
 #include <queue>
 #include "WATCard.h"
-
-_Monitor Printer;
-_Monitor Bank;
+#include "Printer.h"
+#include "Bank.h"
 
 _Task WATCardOffice {
     struct Job { 
@@ -13,7 +12,7 @@ _Task WATCardOffice {
         unsigned int sid;                     // marshalled arguments and return future
         WATCard::FWATCard result;          // return future
         Job( unsigned int amount, unsigned int sid, WATCard *card ) 
-            : amount(amount), sid(sid), card(card) {}
+            : card(card), amount(amount), sid(sid) {}
     };
     _Task Courier {
     private:
@@ -35,11 +34,12 @@ _Task WATCardOffice {
         Start = 'S', Work = 'W', Create   = 'C', Transfer = 'T', Finish   = 'F'
     };              
 
-    Courier **couriers; 
-    std::queue<Job*> jobs;
+
     Printer &printer;
     Bank &bank;
     unsigned int numCouriers;
+    Courier **couriers; 
+    std::queue<Job*> jobs;
     uCondition courierWork;
 
     void main();

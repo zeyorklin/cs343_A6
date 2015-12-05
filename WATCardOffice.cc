@@ -1,6 +1,6 @@
 #include "WATCardOffice.h"
 #include "MPRNG.h"
-#include "WARCard.h"
+#include "WATCard.h"
 #include <iostream>
 
 using namespace std;
@@ -11,13 +11,13 @@ void WATCardOffice::Courier::main() {
 	{
 		WATCardOffice::Job *job = office.requestWork();
 		if(!job) break;
-		if(job->card == null) job->card = new WATCard();
+		if(job->card == NULL) job->card = new WATCard();
 		printer.print(Printer::Courier, id, 't', job->sid, job->amount);
-		bank.withdraw(job-.sid, job->amount);
+		bank.withdraw(job->sid, job->amount);
 		job->card->deposit(job->amount);
 		printer.print(Printer::Courier, id, 'T', job->sid, job->amount);
 
-		if ((mprng() % 6) == 0) {
+		if ((rng() % 6) == 0) {
 			delete job->card;
 			job->result.exception(new WATCardOffice::Lost());
 		}
@@ -33,18 +33,18 @@ void WATCardOffice::Courier::main() {
 }
 
 WATCardOffice::WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers )
-	: printer(prt), bank(bank), numCouriers(numCouriers), courier(new Courier*[numCouriers])
+	: printer(prt), bank(bank), numCouriers(numCouriers), couriers(new Courier*[numCouriers])
 	{
-		for(unsigned int i = 0, i < numCouriers, i += 1)
+		for(unsigned int i = 0; i < numCouriers; i += 1)
 		{
 			couriers[i] = new Courier(printer, *this, bank, i);
 		}
-		printer.print(Printer:;WATCardOffice, 'S');
+		printer.print(Printer::WATCardOffice, 'S');
 	}
 
 WATCardOffice::~WATCardOffice()
 {
-	for(unsigned int i, i < numCouriers, i+=1)
+	for(unsigned int i = 0; i < numCouriers; i+=1)
 	{
 		delete couriers[i];
 	}
@@ -96,8 +96,8 @@ void WATCardOffice::main()
                 courierWork.signalBlock();
             }
             break;
-		}
-	} or _Accept(create, transfer, requestWork);
+		} or _Accept(create, transfer, requestWork);
+	} 
 }
 
 

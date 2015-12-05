@@ -1,10 +1,10 @@
-#include "bank.h"
+#include "Bank.h"
 
 Bank::Bank(unsigned int numStudents) :
     numStudents(numStudents){
     	balances = new unsigned int [numStudents];
     	balancesCond = new uCondition [numStudents];
-    	for(unsigned int i =0, i<numStudents, i+=1)
+    	for(unsigned int i =0; i<numStudents; i+=1)
     	{
     		balances[i] = 0;
     	}
