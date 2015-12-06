@@ -3,6 +3,7 @@
 #include "MPRNG.h"
 #include "Truck.h"
 #include "VendingMachine.h"
+#include "debug.h"
 
 BottlingPlant::BottlingPlant( Printer &prt, NameServer &nameServer, unsigned int numVendingMachines,
              unsigned int maxShippedPerFlavour, unsigned int maxStockPerFlavour,
@@ -12,6 +13,9 @@ BottlingPlant::BottlingPlant( Printer &prt, NameServer &nameServer, unsigned int
 				timeBetweenShipments(timeBetweenShipments), shutdown(false)
 {
 	stock = new unsigned int[VendingMachine::NUM_FLAVOUR];
+	for (unsigned int i = 0; i < VendingMachine::NUM_FLAVOUR; i++) {
+		stock[i] = 0;
+	}
 }
 
 
@@ -51,15 +55,15 @@ void BottlingPlant::main() {
 
 		} or _Accept(~BottlingPlant) {
 			shutdown = true;
-			//_Accept(getShipment);
 			break;
 		}
 	}
+
+	_Accept(getShipment);
 
 	prt.print(Printer::BottlingPlant, 'F');
 }
 
 BottlingPlant::~BottlingPlant() {
-	
 	delete[] stock;
 }

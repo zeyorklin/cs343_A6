@@ -38,19 +38,20 @@ void Student::main() {
 
 		
 		try {
-			//_Select(gift || card);
-			/*
-			if (gift.available()) {
-				machine->buy(flavour, *(gift()));
-				prt.print(Printer::Student, id, 'G', gift()->getBalance());
-				gift.reset();
+			_Enable {
+				//_Select(gift || card);
+				/*
+				if (gift.available()) {
+					machine->buy(flavour, *(gift()));
+					prt.print(Printer::Student, id, 'G', gift()->getBalance());
+					gift.reset();
+					purchased++;
+				} else if (gift.available()) {}*/
+				machine->buy(flavour, *(card()));
+				prt.print(Printer::Student, id, 'B', card()->getBalance());
+				yield(rng(1, 10));
 				purchased++;
-			} else if (gift.available()) {}*/
-			machine->buy(flavour, *(card()));
-			prt.print(Printer::Student, id, 'B', card()->getBalance());
-			yield(rng(1, 10));
-			purchased++;
-
+			}
 			
 		} catch (WATCardOffice::Lost &e) {
 			prt.print(Printer::Student, id, 'L');

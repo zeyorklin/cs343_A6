@@ -1,5 +1,6 @@
 #include "VendingMachine.h"
 #include "Printer.h"
+#include <iostream>
 
 VendingMachine::VendingMachine( Printer &prt, NameServer &nameServer, unsigned int id, unsigned int sodaCost,
                 unsigned int maxStockPerFlavour ) :prt(prt), nameServer(nameServer), id(id), sodaCost(sodaCost),
@@ -56,9 +57,11 @@ void VendingMachine::main() {
 	for ( ;; ) {
 		_Accept(~VendingMachine) {
 			break;
-		} or _Accept(inventory, restocked) {
+		} or _Accept(inventory) {
 
-		} or _When(!stocking) _Accept(buy) {
+		} or _Accept(restocked) {
+
+		}or _When(!stocking) _Accept(buy) {
 			switch (state) {
 				case FUND:
 					_Resume Funds() _At *studentTask;
