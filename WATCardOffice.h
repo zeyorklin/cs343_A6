@@ -5,18 +5,31 @@
 #include "Printer.h"
 #include "Bank.h"
 
+_Monitor Printer;
+_Monitor Bank;
+
 _Task WATCardOffice {
+struct Job;
+public:
+    _Event Lost {};                        // lost WATCard
+    WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers );
+    WATCard::FWATCard create( unsigned int sid, unsigned int amount );
+    WATCard::FWATCard transfer( unsigned int sid, unsigned int amount, WATCard *card );
+    Job *requestWork();
+
+private:
     struct Job { 
         WATCard *card;
         unsigned int sid;      
         unsigned int amount;
         WATCard::FWATCard result;          // return future
-        Job( unsigned int sid, unsigned int amount, WATCard *card ) 
-            : card(card),  sid(sid), amount(amount) {}
+        Job( unsigned int sid, unsigned int amount, WATCard *card );
     };
     _Task Courier {
+    public:
+        Courier(Printer &printer, WATCardOffice &office, Bank &bank, unsigned int id);
     private:
-        void main();
+        
         Printer &printer;
         WATCardOffice &office;
         Bank &bank;
@@ -25,9 +38,9 @@ _Task WATCardOffice {
         enum States {
             Start = 'S', StartFundsTransfer = 't', CompleteFundsTransfer = 'T', Finish = 'F'
         };
-    public:
-        Courier(Printer &printer, WATCardOffice &office, Bank &bank, unsigned int id)
-            : printer(printer), office(office), bank(bank), id(id) {}
+
+        void main();
+    
     };   
 
     enum States { 
@@ -44,13 +57,7 @@ _Task WATCardOffice {
 
     void main();
 
-  public:
-    _Event Lost {};                        // lost WATCard
-    WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers );
-    virtual ~WATCardOffice();
-    WATCard::FWATCard create( unsigned int sid, unsigned int amount );
-    WATCard::FWATCard transfer( unsigned int sid, unsigned int amount, WATCard *card );
-    Job *requestWork();
+  
 };
 
 #endif

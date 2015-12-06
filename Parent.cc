@@ -5,10 +5,11 @@
 Parent::Parent( Printer &prt, Bank &bank, unsigned int numStudents, unsigned int parentalDelay ) 
 	: prt(prt), bank(bank), numStudents(numStudents), parentalDelay(parentalDelay)
 	{
-		prt.print(Printer::Parent, 'S');
+		
 	}
 
 void Parent::main() {
+  prt.print(Printer::Parent, 'S');
   while (true) {
     _Accept(~Parent) {
       break;
@@ -23,5 +24,5 @@ void Parent::main() {
     }
   }
 
-  prt.print(Printer::Parent, 'S');
+  prt.print(Printer::Parent, 'F');
 }

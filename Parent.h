@@ -11,8 +11,9 @@ private:
     Printer &prt;
     Bank &bank;
     unsigned int numStudents, parentalDelay;
-public:
     enum State {Start = 'S', Deposit = 'D', Finished = 'F'};
+public:
+    
     Parent( Printer &prt, Bank &bank, unsigned int numStudents, unsigned int parentalDelay );
 };
 
