@@ -7,12 +7,12 @@
 
 _Task WATCardOffice {
     struct Job { 
-        WATCard *card;     
+        WATCard *card;
+        unsigned int sid;      
         unsigned int amount;
-        unsigned int sid;                     // marshalled arguments and return future
         WATCard::FWATCard result;          // return future
-        Job( unsigned int amount, unsigned int sid, WATCard *card ) 
-            : card(card), amount(amount), sid(sid) {}
+        Job( unsigned int sid, unsigned int amount, WATCard *card ) 
+            : card(card),  sid(sid), amount(amount) {}
     };
     _Task Courier {
     private:
