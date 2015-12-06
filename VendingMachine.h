@@ -27,6 +27,7 @@ _Task VendingMachine {
     void restocked();
     _Nomutex unsigned int cost();
     _Nomutex unsigned int getId();
+    ~VendingMachine();
 
   private:
     unsigned int* stock;
