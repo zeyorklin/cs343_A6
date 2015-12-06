@@ -13,6 +13,7 @@ struct Job;
 public:
     _Event Lost {};                        // lost WATCard
     WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers );
+    ~WATCardOffice();
     WATCard::FWATCard create( unsigned int sid, unsigned int amount );
     WATCard::FWATCard transfer( unsigned int sid, unsigned int amount, WATCard *card );
     Job *requestWork();
@@ -23,30 +24,24 @@ private:
         unsigned int sid;      
         unsigned int amount;
         WATCard::FWATCard result;          // return future
-        Job( unsigned int sid, unsigned int amount, WATCard *card );
+        Job( unsigned int sid, unsigned int amount, WATCard *card )
+            : sid(sid), amount(amount), card(card) {}
+
     };
     _Task Courier {
     public:
-        Courier(Printer &printer, WATCardOffice &office, Bank &bank, unsigned int id);
+        Courier(Printer &printer, WATCardOffice &office, Bank &bank, unsigned int id)
+            : printer(printer), office(office), bank(bank), id(id) {}
     private:
         
         Printer &printer;
         WATCardOffice &office;
         Bank &bank;
-        unsigned int id; //not sure if needed
-
-        enum States {
-            Start = 'S', StartFundsTransfer = 't', CompleteFundsTransfer = 'T', Finish = 'F'
-        };
+        unsigned int id; 
 
         void main();
     
     };   
-
-    enum States { 
-        Start = 'S', Work = 'W', Create   = 'C', Transfer = 'T', Finish   = 'F'
-    };              
-
 
     Printer &printer;
     Bank &bank;

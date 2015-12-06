@@ -8,7 +8,6 @@ _Task VendingMachine;
 
 _Task NameServer {
 private:
-    enum State {Start = 'S', Register= 'R', New = 'N', Finished = 'F'};
 	Printer &prt;
     unsigned int numStudents, numVendingMachines, numRegisteredMachines;
     unsigned int *assignedMachines;
