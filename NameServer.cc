@@ -6,6 +6,10 @@ NameServer::NameServer( Printer &prt, unsigned int numVendingMachines, unsigned 
 	: prt(prt), numStudents(numStudents), numVendingMachines(numVendingMachines), numRegisteredMachines(0)
 	{
 		assignedMachines = new unsigned int [numStudents];
+		for (unsigned int i = 0; i < numStudents; i++) {
+			assignedMachines[i] = i % numVendingMachines;
+		}
+
 		vendingMachines = new VendingMachine*[numStudents];
 	}
 

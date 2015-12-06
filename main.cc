@@ -73,11 +73,14 @@ void uMain::main() {
 
 	rng.seed(seed);
 
+
 	// start tasks
 	Printer printer(params.numStudents, params.numVendingMachines, params.numCouriers);
 	Bank bank(params.numStudents);
 
 	Parent *parent = new Parent(printer, bank, params.numStudents, params.parentalDelay);
+
+	Groupoff *groupoff = new Groupoff(printer, params.numStudents, params.sodaCost, params.groupoffDelay);
 
 	WATCardOffice *cardOffice = new WATCardOffice(printer, bank, params.numCouriers);
 
@@ -94,7 +97,6 @@ void uMain::main() {
 													params.numVendingMachines, params.maxShippedPerFlavour, 
 													params.maxStockPerFlavour, params.timeBetweenShipments);
 
-	Groupoff *groupoff = new Groupoff(printer, params.numStudents, params.sodaCost, params.groupoffDelay);
 	
 	Student *students[params.numStudents];
 	for (unsigned int i = 0; i < params.numStudents; i++) {
@@ -108,8 +110,6 @@ void uMain::main() {
 		delete students[i];
 	}
 
-	delete groupoff;
-
 	delete bottlingPlant;
 
 	for (unsigned int i = 0; i < params.numVendingMachines; i++) {
@@ -118,8 +118,9 @@ void uMain::main() {
 
 	delete nameServer;
 	delete cardOffice;
+	delete groupoff;
 	delete parent;
-
+	
 
 
 } 

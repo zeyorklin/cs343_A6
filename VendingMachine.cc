@@ -1,28 +1,30 @@
 #include "VendingMachine.h"
 #include "Printer.h"
 
-
 VendingMachine::VendingMachine( Printer &prt, NameServer &nameServer, unsigned int id, unsigned int sodaCost,
                 unsigned int maxStockPerFlavour ) :prt(prt), nameServer(nameServer), id(id), sodaCost(sodaCost),
                 maxStockPerFlavour(maxStockPerFlavour) {
     stock = new unsigned int[Flavours::NUM_FLAVOUR];
+    for (unsigned int i = 0; i < Flavours::NUM_FLAVOUR; i++) {
+    	stock[i] = 0;
+    }
     nameServer.VMregister(this);
 
 }
 
 
 void VendingMachine::buy( Flavours flavour, WATCard &card ) {
-		if (stock[flavour] == 0) {
-			state = STOCK;
-		} else if (card.getBalance() < sodaCost) {	
-			state = FUND;
-		} else {
-			state = BUY;
-			buyFlavour = flavour;
-			buyCard = &card; 
-		}
-		studentTask = &uThisTask();
-		done.wait();
+	if (stock[flavour] == 0) {
+		state = STOCK;
+	} else if (card.getBalance() < sodaCost) {	
+		state = FUND;
+	} else {
+		state = BUY;
+		buyFlavour = flavour;
+		buyCard = &card; 
+	}
+	studentTask = &uThisTask();
+	done.wait();
 }
 
 
@@ -67,7 +69,7 @@ void VendingMachine::main() {
 				case BUY:
 					buyCard->withdraw(sodaCost);
 					stock[buyFlavour]--;
-					prt.print(Printer::Vending, 'B', buyFlavour, stock[buyFlavour]);
+					prt.print(Printer::Vending, id, 'B', buyFlavour, stock[buyFlavour]);
 					break;
 			}
 			done.signalBlock();
