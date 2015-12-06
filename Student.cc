@@ -3,6 +3,7 @@
 #include "WATCard.h"
 #include "MPRNG.h"
 #include "WATCardOffice.h"
+#include "debug.h"
 
 
 Student::Student( Printer &prt, NameServer &nameServer, WATCardOffice &cardOffice, Groupoff &groupoff, unsigned int id, unsigned int maxPurchases ) 
@@ -35,20 +36,24 @@ void Student::main() {
 	for (unsigned int purchased = 0; purchased < purchase; ) {
 		
 		try {
-			_Enable {
+			_Enable { 
 
-				_Select(card || gift);
+				_Select(card || gift) {
+					if (card.available()) {
+						machine->buy(flavour, *(card()));
+						prt.print(Printer::Student, id, 'B', card()->getBalance());
+						yield(rng(1, 10));
+						purchased++;
+					} else if (gift.available()) {
+						machine->buy(flavour, *(gift()));
+						prt.print(Printer::Student, id, 'G', gift()->getBalance());
+						gift.reset();
+						yield(rng(1, 10));
+			 			purchased++;
+					}
 
-				if (gift.available()) {
-					machine->buy(flavour, *(gift()));
-					prt.print(Printer::Student, id, 'G', gift()->getBalance());
-					gift.reset();
-					purchased++;
-				} else if (card.available()) {
-					machine->buy(flavour, *(card()));
-					prt.print(Printer::Student, id, 'B', card()->getBalance());
-					yield(rng(1, 10));
-					purchased++;
+				} _Else {
+
 				}
 			}
 			

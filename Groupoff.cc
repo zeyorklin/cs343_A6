@@ -22,7 +22,9 @@ Groupoff::~Groupoff() {
 void Groupoff::main() {
 	prt.print(Printer::Groupoff, 'S');
 	for (unsigned int gifted = 0; gifted < numStudents; ) {
-		_Accept(giftCard) {
+		 _Accept(~Groupoff) {
+			break;
+		} or _Accept(giftCard) {
 			yield(groupoffDelay);
 			WATCard *card = new WATCard();
 			card->deposit(sodaCost);
@@ -32,9 +34,7 @@ void Groupoff::main() {
 			requests.pop();
 			w->result.delivery(card);
 			gifted++;
-		} _Accept(~Groupoff) {
-			break;
-		} _Else 
+		}_Else 
 		{
 		}
 	}
