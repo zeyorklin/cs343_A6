@@ -33,7 +33,7 @@ bool convert( int &val, char *buffer ) {		// convert C string to integer
 enum { sizeDeflt = 20, codeDeflt = 5 };	
 
 void usage( char *argv[] ) {
-    cerr << "Usage: " << argv[0] << endl;
+    cerr << "Usage: " << argv[0] << " [ config-file [ seed >= 0]" << endl;
     exit( EXIT_FAILURE );				// TERMINATE
 } // usage
 
