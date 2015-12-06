@@ -51,7 +51,8 @@ void Truck::main() {
 					inventory[i] += addBottles;
 					cargo[i] -= addBottles;
 					totalBottles -= addBottles;
-					if (spaceInMachine > cargo[i]) unfilled += spaceInMachine - cargo[i];
+					if (maxStockPerFlavour > inventory[i]) unfilled += maxStockPerFlavour - inventory[i];
+
 				}
 
 				if (unfilled > 0) {
