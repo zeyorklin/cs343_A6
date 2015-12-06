@@ -25,17 +25,15 @@ void Student::main() {
 
 	WATCard::FWATCard card = cardOffice.create(id, startBalance);
 
-	/*
-	WATCard::FWATCard gift = groupoff.giftCard();
-	prt.print(Printer::Student, id, 'G');
-	*/
+	
+	//WATCard::FWATCard gift = groupoff.giftCard();
+	//prt.print(Printer::Student, id, 'G');
 
+	// get machine location
+	VendingMachine *machine = nameServer.getMachine(id);
+	prt.print(Printer::Student, id, 'V', machine->getId());	
+	
 	for (unsigned int purchased = 0; purchased < purchase; ) {
-
-		// get machine location
-		VendingMachine *machine = nameServer.getMachine(id);
-		prt.print(Printer::Student, id, 'V', machine->getId());
-
 		
 		try {
 			_Enable {
