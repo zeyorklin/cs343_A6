@@ -7,7 +7,7 @@
 
 _Task Groupoff {
 
-	struct Work {
+	struct WorkCard {
 		WATCard::FWATCard result;
 	};
 
@@ -17,12 +17,13 @@ _Task Groupoff {
 	unsigned int sodaCost;
 	unsigned int groupoffDelay;
 	unsigned int cardsAssigned;
-	std::queue<Work *> requests;
+	std::queue<WorkCard *> requests;
 
     void main();
   public:
     Groupoff( Printer &prt, unsigned int numStudents, unsigned int sodaCost, unsigned int groupoffDelay );
     WATCard::FWATCard giftCard();
+    ~Groupoff();
 };
 
 

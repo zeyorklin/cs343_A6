@@ -26,8 +26,7 @@ void Student::main() {
 	WATCard::FWATCard card = cardOffice.create(id, startBalance);
 
 	
-	//WATCard::FWATCard gift = groupoff.giftCard();
-	//prt.print(Printer::Student, id, 'G');
+	WATCard::FWATCard gift = groupoff.giftCard();
 
 	// get machine location
 	VendingMachine *machine = nameServer.getMachine(id);
@@ -37,18 +36,20 @@ void Student::main() {
 		
 		try {
 			_Enable {
-				//_Select(gift || card);
-				/*
+
+				_Select(card || gift);
+
 				if (gift.available()) {
 					machine->buy(flavour, *(gift()));
 					prt.print(Printer::Student, id, 'G', gift()->getBalance());
 					gift.reset();
 					purchased++;
-				} else if (gift.available()) {}*/
-				machine->buy(flavour, *(card()));
-				prt.print(Printer::Student, id, 'B', card()->getBalance());
-				yield(rng(1, 10));
-				purchased++;
+				} else if (card.available()) {
+					machine->buy(flavour, *(card()));
+					prt.print(Printer::Student, id, 'B', card()->getBalance());
+					yield(rng(1, 10));
+					purchased++;
+				}
 			}
 			
 		} catch (WATCardOffice::Lost &e) {

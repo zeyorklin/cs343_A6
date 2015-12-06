@@ -33,6 +33,10 @@ void BottlingPlant::getShipment( unsigned int cargo[] ) {
 	prt.print(Printer::BottlingPlant, 'P');
 }
 
+BottlingPlant::~BottlingPlant() {
+	delete[] stock;
+}
+
 void BottlingPlant::main() {
 	prt.print(Printer::BottlingPlant, 'S');
 	Truck truck(prt, nameServer, *this, numVendingMachines, maxStockPerFlavour);
@@ -64,6 +68,3 @@ void BottlingPlant::main() {
 	prt.print(Printer::BottlingPlant, 'F');
 }
 
-BottlingPlant::~BottlingPlant() {
-	delete[] stock;
-}

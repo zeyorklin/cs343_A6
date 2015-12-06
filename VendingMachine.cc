@@ -50,6 +50,9 @@ _Nomutex unsigned int VendingMachine::getId() {
 	return id;
 }
 
+VendingMachine::~VendingMachine() {
+
+}
 
 void VendingMachine::main() {
 	prt.print(Printer::Vending, id, 'S', sodaCost);
@@ -83,6 +86,3 @@ void VendingMachine::main() {
 }
 
 
-VendingMachine::~VendingMachine() {
-
-}
