@@ -63,8 +63,9 @@ void BottlingPlant::main() {
 		}
 	}
 
+	prt.print(Printer::BottlingPlant, 'F');
+	
 	_Accept(getShipment);
 
-	prt.print(Printer::BottlingPlant, 'F');
 }
 
