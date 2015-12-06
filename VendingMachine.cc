@@ -83,6 +83,3 @@ void VendingMachine::main() {
 }
 
 
-VendingMachine::~VendingMachine() {
-
-}

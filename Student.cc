@@ -63,6 +63,8 @@ void Student::main() {
 		}
 	}
 
+	delete card();
+
 	prt.print(Printer::Student, id, 'F');
 }
 

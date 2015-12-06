@@ -8,6 +8,8 @@
 #include "MPRNG.h"
 #include "VendingMachine.h"
 
+
+
 _Task Student {
 	Printer &prt;
 	NameServer &nameServer;
