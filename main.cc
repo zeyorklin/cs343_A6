@@ -33,7 +33,7 @@ bool convert( int &val, char *buffer ) {		// convert C string to integer
 enum { sizeDeflt = 20, codeDeflt = 5 };	
 
 void usage( char *argv[] ) {
-    cerr << "Usage: " << argv[0] << " [ config-file [ seed >= 0]" << endl;
+    cerr << "Usage: " << argv[0] << " [ config-file [ seed > 0]" << endl;
     exit( EXIT_FAILURE );				// TERMINATE
 } // usage
 
@@ -44,7 +44,7 @@ void uMain::main() {
 
 	switch (argc) {
 		case 3:
-	        if ( ! convert( seed, argv[2] ) || seed < 0 ) {	// invalid integer ?
+	        if ( ! convert( seed, argv[2] ) || seed <= 0 ) {	// invalid integer ?
 		    	usage( argv );
 			} // if
 		case 2:
