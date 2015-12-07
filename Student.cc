@@ -33,43 +33,52 @@ void Student::main() {
 	VendingMachine *machine = nameServer.getMachine(id);
 	prt.print(Printer::Student, id, 'V', machine->getId());	
 	
-	for (unsigned int purchased = 0; purchased < purchase; ) {
-		
+	unsigned int purchased = 0;
+	bool lostCard = false;
+
+
+	for ( ;; ) {
 		try {
-			_Enable { 
+			if (lostCard == true) {
+				card = cardOffice.create(id, startBalance);
+				lostCard = false;
+			}
+			for (; purchased < purchase; ) {
+				try {
+					_Enable { 
 
-				_Select(card || gift) {
-					if (card.available()) {
-						machine->buy(flavour, *(card()));
-						prt.print(Printer::Student, id, 'B', card()->getBalance());
-						yield(rng(1, 10));
-						purchased++;
-					} else if (gift.available()) {
-						machine->buy(flavour, *(gift()));
-						prt.print(Printer::Student, id, 'G', gift()->getBalance());
-						gift.reset();
-						yield(rng(1, 10));
-			 			purchased++;
+						_Select(card || gift) {
+							if (card.available()) {
+								machine->buy(flavour, *(card()));
+								prt.print(Printer::Student, id, 'B', card()->getBalance());
+								yield(rng(1, 10));
+								purchased++;
+							} else if (gift.available()) {
+								machine->buy(flavour, *(gift()));
+								prt.print(Printer::Student, id, 'G', gift()->getBalance());
+								gift.reset();
+								yield(rng(1, 10));
+					 			purchased++;
+							}
+						} _Else { }
 					}
-
-				} _Else {
-
+				} catch (VendingMachine::Funds &e) {
+					card = cardOffice.transfer(id, machine->cost() + startBalance, card());
+				} catch (VendingMachine::Stock &e) {
+					// try another machine
+					machine = nameServer.getMachine(id);
+					prt.print(Printer::Student, id, 'V', machine->getId());
 				}
 			}
-			
+			break;
 		} catch (WATCardOffice::Lost &e) {
 			prt.print(Printer::Student, id, 'L');
-			card = cardOffice.create(id, startBalance);
-		} catch (VendingMachine::Funds &e) {
-			card = cardOffice.transfer(id, machine->cost() + startBalance, card());
-		} catch (VendingMachine::Stock &e) {
-			// try another machine
-			machine = nameServer.getMachine(id);
-			prt.print(Printer::Student, id, 'V', machine->getId());
+			lostCard = true;
+			card.reset();
 		}
-	}
+	} 
 
-	delete card();
+	//delete card();
 
 	prt.print(Printer::Student, id, 'F');
 }
