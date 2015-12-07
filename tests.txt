@@ -1,0 +1,12 @@
+1. invalid configuration file
+2. seeds out of range
+
+the output should have the following behaviours:
+*vending machines will be blocked until registered by nameserver
+*trucks will be blocked until factory started producing
+*bottles produced by the factory should be the same number as the bottles picked up by truck
+*truck only terminates when bottling plant is terminated
+*when student loses a watcard, new one will be created
+*vending machines are assigned to student in round robin fashion
+*when student done drinking soda, they terminated
+*watcardoffice only terminates when couriers terminated
