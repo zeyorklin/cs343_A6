@@ -1,4 +1,4 @@
-#define DEBUG
+//#define DEBUG
 
 #include <iostream>
 using namespace std;
